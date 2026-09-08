@@ -1,0 +1,99 @@
+/* General page styling */
+body {
+    background: #f4f7fb;
+    color: #212529;
+    min-height: 100vh;
+}
+
+/* Cards */
+.expense-card,
+.summary-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.expense-card:hover,
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* Form labels */
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Form controls */
+.form-control,
+.form-select {
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #4c6fff;
+    box-shadow: 0 0 0 0.2rem rgba(76, 111, 255, 0.15);
+}
+
+/* Input group */
+.input-group-text {
+    background: #eef2ff;
+    color: #4355b9;
+    border: 1px solid #ced4da;
+    font-weight: 600;
+}
+
+/* Primary button */
+.btn-primary {
+    background: #4c6fff;
+    border-color: #4c6fff;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #3b5bdb;
+    border-color: #3b5bdb;
+    transform: translateY(-1px);
+}
+
+/* Summary card */
+.summary-card {
+    background: #ffffff;
+}
+
+.summary-label {
+    color: #6c757d;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.total-spent {
+    color: #212529;
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+
+/* Responsive spacing */
+@media (max-width: 767.98px) {
+    .container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .total-spent {
+        font-size: 1.9rem;
+    }
+}
