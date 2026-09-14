@@ -1,99 +1,112 @@
 /* General page styling */
 body {
-    background: #f4f7fb;
-    color: #212529;
+    background: #f8f9fa; /* Very light gray background */
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar Styling */
+#wrapper {
+    overflow-x: hidden;
     min-height: 100vh;
 }
 
-/* Cards */
-.expense-card,
-.summary-card {
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .list-group-item {
     border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 1rem 1.5rem;
+    transition: all 0.2s ease;
 }
 
-.expense-card:hover,
-.summary-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-    color: #212529;
-    font-weight: 600;
-}
-
-/* Form labels */
-.form-label {
-    font-weight: 600;
-    color: #495057;
-}
-
-/* Form controls */
-.form-control,
-.form-select {
-    padding: 0.6rem 0.9rem;
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #4c6fff;
-    box-shadow: 0 0 0 0.2rem rgba(76, 111, 255, 0.15);
-}
-
-/* Input group */
-.input-group-text {
-    background: #eef2ff;
-    color: #4355b9;
-    border: 1px solid #ced4da;
-    font-weight: 600;
-}
-
-/* Primary button */
-.btn-primary {
-    background: #4c6fff;
-    border-color: #4c6fff;
-    border-radius: 8px;
-    padding: 0.6rem 1rem;
-    font-weight: 600;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.btn-primary:hover {
-    background: #3b5bdb;
-    border-color: #3b5bdb;
-    transform: translateY(-1px);
-}
-
-/* Summary card */
-.summary-card {
-    background: #ffffff;
-}
-
-.summary-label {
-    color: #6c757d;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.total-spent {
-    color: #212529;
-    font-size: 2.25rem;
+/* Active Sidebar Link (Soft Blue) */
+#sidebar-wrapper .list-group-item.active {
+    background-color: #eef2ff !important;
+    color: #4355b9 !important;
+    border-left: 4px solid #4355b9;
     font-weight: 700;
 }
 
-/* Responsive spacing */
-@media (max-width: 767.98px) {
-    .container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-    }
+#sidebar-wrapper .list-group-item:hover:not(.active) {
+    background-color: #f8f9fa !important;
+    color: #4355b9 !important;
+}
 
-    .total-spent {
-        font-size: 1.9rem;
+/* Page Content */
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+/* Shared Card Styles */
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* --- Muted Color Palette for Summary Cards --- */
+
+/* Balance: Soft Blue */
+.card-balance {
+    background-color: #e0f2fe; 
+}
+.card-balance h3 { color: #0369a1; }
+.card-balance .text-muted { color: #0284c7 !important; }
+
+/* Income: Soft Green */
+.card-income {
+    background-color: #dcfce7;
+}
+.card-income h3 { color: #15803d; }
+.card-income .text-muted { color: #16a34a !important; }
+
+/* Expense: Soft Red/Pink */
+.card-expense {
+    background-color: #fee2e2;
+}
+.card-expense h3 { color: #b91c1c; }
+.card-expense .text-muted { color: #dc2626 !important; }
+
+/* Budget: Soft Yellow/Orange */
+.card-budget {
+    background-color: #fef3c7;
+}
+.card-budget h3 { color: #b45309; }
+.card-budget .text-muted { color: #d97706 !important; }
+
+/* Responsive sidebar toggle */
+@media (min-width: 768px) {
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+/* --- Mobile Responsiveness Fix for Sidebar --- */
+@media (max-width: 767.98px) {
+    /* Stop the sidebar from taking up the whole screen height */
+    .col-md-2.min-vh-100 {
+        min-height: auto !important; 
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    /* Turn the vertical menu into a horizontal swipeable menu on phones */
+    .col-md-2 .list-group {
+        flex-direction: row !important; 
+        overflow-x: auto; 
+    }
+    
+    /* Keep the links looking neat side-by-side */
+    .col-md-2 .list-group-item {
+        white-space: nowrap; 
+        border-radius: 0 !important;
     }
 }
