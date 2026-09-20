@@ -1,4 +1,21 @@
+// Apply theme immediately to prevent flash
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-mode');
+}
+
 $(document).ready(function() {
+    // Theme toggle functionality
+    if ($('#themeToggleBtn').length) {
+        $('#themeToggleBtn').on('click', function() {
+            $('body').toggleClass('light-mode');
+            if ($('body').hasClass('light-mode')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+
     // 1. Function to fetch and update the total spent
     function updateTotal() {
         $.post('backend.php', { action: 'calculate' }, function(response) {
