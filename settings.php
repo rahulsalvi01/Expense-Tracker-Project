@@ -147,6 +147,28 @@ $userEmail = $_SESSION['user_email'] ?? '';
                 </div>
             </div>
             
+            <div class="row g-4 mt-2">
+                <div class="col-md-12">
+                    <!-- Danger Zone Card -->
+                    <div class="card glass-panel border-0 animate-fade-in delay-3" style="border: 1px solid rgba(220, 53, 69, 0.3) !important;">
+                        <div class="card-header border-0 pt-4 pb-0">
+                            <h5 class="fw-bold m-0 text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i> Danger Zone</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center p-3 rounded" style="background: rgba(220, 53, 69, 0.05); border: 1px solid rgba(220, 53, 69, 0.2);">
+                                <div class="mb-3 mb-md-0">
+                                    <h6 class="mb-1 text-light">Delete Account</h6>
+                                    <small class="text-secondary">Permanently delete your account and all associated data. This action cannot be undone.</small>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-danger" id="deleteAccountBtn">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -172,6 +194,27 @@ $userEmail = $_SESSION['user_email'] ?? '';
         }, 'json').fail(function() {
             $('#profileAlert').removeClass('d-none').addClass('alert-danger').text('Server error updating profile.');
         });
+    });
+
+    $('#deleteAccountBtn').on('click', function() {
+        if(confirm('Are you absolutely sure you want to delete your account? This will permanently delete your profile, transactions, and budgets. This action cannot be undone.')) {
+            const btn = $(this);
+            const originalText = btn.text();
+            btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i> Deleting...');
+            
+            $.post('api/auth/delete_account.php', function(response) {
+                if(response.status === 'success') {
+                    alert(response.message);
+                    window.location.href = 'login.php';
+                } else {
+                    alert(response.message);
+                    btn.prop('disabled', false).text(originalText);
+                }
+            }, 'json').fail(function() {
+                alert('Server error while deleting account.');
+                btn.prop('disabled', false).text(originalText);
+            });
+        }
     });
 </script>
 
