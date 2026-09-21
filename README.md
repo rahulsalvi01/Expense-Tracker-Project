@@ -14,3 +14,5 @@ Storage: File-based (CSV), no database required
 
 How It Works:
 The UI sends asynchronous requests via jQuery to a PHP server. The PHP script securely logs the data to a CSV file and executes a compiled C binary (calc.exe) via shell commands to compute and return the exact total spent.
+
+Want to check this website : https://my-fintrack.infinityfree.io/ ...
