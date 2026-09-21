@@ -42,7 +42,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: -1;
     pointer-events: none;
@@ -244,19 +244,71 @@ h1, h2, h3, h4, h5, h6 {
         border-right: none;
     }
     
-    /* Mobile Sidebar Adjustments */
-    .col-md-2.glass-panel {
-        position: fixed !important;
-        left: -100%;
-        width: 280px;
-        transition: left 0.3s ease-in-out;
-        z-index: 1040 !important;
-        background: var(--bg-primary) !important;
-        box-shadow: 5px 0 25px rgba(0,0,0,0.5) !important;
+    /* Bottom Navigation Bar for Mobile */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        z-index: 1040;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: rgba(10, 10, 22, 0.85) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--glass-border) !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px); /* iPhone home indicator spacing */
+    }
+
+    body.light-mode .bottom-nav {
+        background: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .bottom-nav-item {
+        color: var(--text-secondary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        width: 100%;
+        height: 100%;
+        transition: color 0.2s ease;
+        padding: 5px 0;
+    }
+
+    .bottom-nav-item i {
+        font-size: 1.25rem;
+        margin-bottom: 4px;
+        transition: transform 0.2s ease;
+    }
+
+    .bottom-nav-item:hover, .bottom-nav-item:active {
+        color: var(--text-primary);
     }
     
-    .col-md-2.glass-panel.show-sidebar {
-        left: 0;
+    .bottom-nav-item:hover i, .bottom-nav-item:active i {
+        transform: scale(1.1);
+    }
+
+    .bottom-nav-item.active {
+        color: var(--accent-purple);
+    }
+
+    .bottom-nav-item.active i {
+        color: var(--accent-purple);
+    }
+
+    /* Extra padding for content to avoid overlap with bottom nav */
+    .pb-mobile-nav {
+        padding-bottom: 90px !important; 
     }
 }
 

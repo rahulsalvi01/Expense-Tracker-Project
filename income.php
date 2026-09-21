@@ -135,7 +135,7 @@ $incomes = $incStmt->fetchAll();
 <div class="container-fluid" style="margin-top: 70px;">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 glass-panel min-vh-100 shadow-sm border-end py-4 px-2" style="position: fixed; top: 70px; height: calc(100vh - 70px); z-index: 10;">
+        <div class="col-md-2 glass-panel min-vh-100 shadow-sm border-end py-4 px-2 d-none d-md-block" style="position: fixed; top: 70px; height: calc(100vh - 70px); z-index: 10;">
             <div class="list-group list-group-flush rounded-0 px-2">
                 <a href="index.php" class="list-group-item list-group-item-action fw-semibold py-3 px-4 animate-fade-in delay-1">
                     <i class="fa-solid fa-house me-3 w-20px"></i> Dashboard
@@ -165,7 +165,7 @@ $incomes = $incStmt->fetchAll();
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-10 py-4 px-5 offset-md-2" style="position: relative; z-index: 5;">
+        <div class="col-md-10 py-4 px-3 px-md-5 offset-md-2 pb-mobile-nav" style="position: relative; z-index: 5;">
             <div class="d-flex justify-content-between align-items-center mb-4 animate-fade-in">
                 <h2 class="fw-bold text-light"><i class="fa-solid fa-arrow-trend-up text-success me-2"></i> My Income</h2>
                 <a href="index.php" class="btn btn-outline-secondary">Back to Dashboard</a>
@@ -294,6 +294,31 @@ $incomes = $incStmt->fetchAll();
     </div>
 </div>
 
+<!-- Bottom Navigation for Mobile -->
+<div class="bottom-nav d-md-none glass-panel">
+    <a href="index.php" class="bottom-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a href="transactions.php" class="bottom-nav-item">
+        <i class="fa-solid fa-list"></i>
+        <span>History</span>
+    </a>
+    <a href="expenses.php" class="bottom-nav-item">
+        <i class="fa-solid fa-minus-circle" style="color: var(--accent-red);"></i>
+        <span>Expense</span>
+    </a>
+    <a href="income.php" class="bottom-nav-item active">
+        <i class="fa-solid fa-plus-circle" style="color: var(--accent-green);"></i>
+        <span>Income</span>
+    </a>
+    <a href="settings.php" class="bottom-nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+    </a>
+</div>
+
+<!-- Three.js for 3D Background -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="app3d.js"></script>
 </body>

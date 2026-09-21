@@ -128,34 +128,4 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Mobile Sidebar Navigation Logic
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if toggle already exists to prevent duplicates
-    if (!document.getElementById('mobileSidebarToggle')) {
-        const navRight = document.querySelector('.navbar .d-flex.align-items-center');
-        if (navRight) {
-            const toggleBtn = document.createElement('button');
-            toggleBtn.id = 'mobileSidebarToggle';
-            toggleBtn.className = 'btn btn-sm btn-outline-primary d-md-none me-3';
-            toggleBtn.style.borderRadius = '8px';
-            toggleBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-            navRight.insertBefore(toggleBtn, navRight.firstChild);
-            
-            toggleBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelector('.col-md-2.glass-panel').classList.toggle('show-sidebar');
-            });
-        }
-    }
-
-    // Close sidebar when a link is clicked on mobile
-    const sidebarLinks = document.querySelectorAll('.col-md-2.glass-panel .list-group-item');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                const sidebar = document.querySelector('.col-md-2.glass-panel');
-                if (sidebar) sidebar.classList.remove('show-sidebar');
-            }
-        });
-    });
-});
+// Mobile Sidebar Navigation Logic (Removed in favor of bottom nav)
