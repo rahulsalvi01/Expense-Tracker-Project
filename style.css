@@ -243,6 +243,21 @@ h1, h2, h3, h4, h5, h6 {
         border-left: none;
         border-right: none;
     }
+    
+    /* Mobile Sidebar Adjustments */
+    .col-md-2.glass-panel {
+        position: fixed !important;
+        left: -100%;
+        width: 280px;
+        transition: left 0.3s ease-in-out;
+        z-index: 1040 !important;
+        background: var(--bg-primary) !important;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.5) !important;
+    }
+    
+    .col-md-2.glass-panel.show-sidebar {
+        left: 0;
+    }
 }
 
 /* Global Form Control & Select Overrides */
