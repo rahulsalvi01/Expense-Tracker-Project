@@ -1,10 +1,10 @@
 <?php
 // config/db.php
 
-$host = '127.0.0.1';
-$dbname = 'expense_tracker';
-$username = 'root'; 
-$password = '';     
+$host = 'my-fintrack.infinityfree.io';
+$dbname = 'if0_43011222_fintrack';
+$username = 'if0_43011222'; 
+$password = 'aSfiTAfVSd';     
 
 try {
     // Create a new PDO instance
