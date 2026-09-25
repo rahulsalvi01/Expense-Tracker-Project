@@ -1,7 +1,7 @@
 <?php
 // config/db.php
 
-$host = 'my-fintrack.infinityfree.io';
+$host = 'sql104.infinityfree.com';
 $dbname = 'if0_43011222_fintrack';
 $username = 'if0_43011222'; 
 $password = 'aSfiTAfVSd';     
