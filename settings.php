@@ -53,6 +53,9 @@ $userEmail = $_SESSION['user_email'] ?? '';
 <!-- Top Navigation -->
 <nav class="navbar navbar-expand-lg glass-nav shadow-sm border-bottom fixed-top">
     <div class="container-fluid px-4">
+        <button class="navbar-toggler border-0 shadow-none text-primary d-md-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+            <i class="fa-solid fa-bars fs-3"></i>
+        </button>
         <a class="navbar-brand fw-bold text-primary fs-4" href="index.php" style="background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
             <i class="fa-solid fa-wallet me-2" style="-webkit-text-fill-color: #3b82f6;"></i>FinTrack
         </a>
@@ -64,6 +67,39 @@ $userEmail = $_SESSION['user_email'] ?? '';
         </div>
     </div>
 </nav>
+
+<!-- Mobile Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start glass-panel d-md-none" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel" style="width: 280px; z-index: 1050; top: 70px; height: calc(100vh - 70px);">
+    <div class="offcanvas-body p-0">
+        <div class="list-group list-group-flush rounded-0 px-2 mt-3">
+            <a href="index.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-house me-3 w-20px"></i> Dashboard
+            </a>
+            <a href="transactions.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-list me-3 w-20px"></i> Transactions
+            </a>
+            <a href="expenses.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-arrow-trend-down me-3 w-20px"></i> Expenses
+            </a>
+            <a href="income.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-arrow-trend-up me-3 w-20px"></i> Income
+            </a>
+            <a href="budgets.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-chart-pie me-3 w-20px"></i> Budgets
+            </a>
+            <a href="analytics.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-chart-line me-3 w-20px"></i> Analytics
+            </a>
+            <a href="reports.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-file-invoice me-3 w-20px"></i> Reports
+            </a>
+            <a href="settings.php" class="list-group-item list-group-item-action fw-semibold mobile-nav-item py-3 px-4">
+                <i class="fa-solid fa-gear me-3 w-20px"></i> Settings
+            </a>
+        </div>
+    </div>
+</div>
+
 
 <div class="container-fluid" style="margin-top: 70px;">
     <div class="row">
@@ -98,7 +134,7 @@ $userEmail = $_SESSION['user_email'] ?? '';
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-10 py-4 px-3 px-md-5 offset-md-2 pb-mobile-nav" style="position: relative; z-index: 5;">
+        <div class="col-md-10 py-4 px-3 px-md-5 offset-md-2" style="position: relative; z-index: 5;">
             <h3 class="fw-bold mb-4 text-light animate-fade-in">Settings</h3>
             
             <div class="row g-4">
@@ -176,30 +212,6 @@ $userEmail = $_SESSION['user_email'] ?? '';
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- Bottom Navigation for Mobile -->
-<div class="bottom-nav d-md-none glass-panel">
-    <a href="index.php" class="bottom-nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-    </a>
-    <a href="transactions.php" class="bottom-nav-item">
-        <i class="fa-solid fa-list"></i>
-        <span>History</span>
-    </a>
-    <a href="expenses.php" class="bottom-nav-item">
-        <i class="fa-solid fa-minus-circle" style="color: var(--accent-red);"></i>
-        <span>Expense</span>
-    </a>
-    <a href="income.php" class="bottom-nav-item">
-        <i class="fa-solid fa-plus-circle" style="color: var(--accent-green);"></i>
-        <span>Income</span>
-    </a>
-    <a href="settings.php" class="bottom-nav-item active">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
-    </a>
-</div>
-
 <!-- Three.js for 3D Background -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="app.js"></script>
@@ -244,5 +256,6 @@ $userEmail = $_SESSION['user_email'] ?? '';
     });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

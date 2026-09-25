@@ -14,7 +14,7 @@ camera.position.z = 30;
 
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
 // Particles
 const particlesGeometry = new THREE.BufferGeometry();

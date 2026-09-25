@@ -339,3 +339,44 @@ body.light-mode .form-control:focus, body.light-mode .form-select:focus {
     color: var(--text-secondary);
     opacity: 0.7;
 }
+/* Mobile Sidebar Animations & Blur */
+.offcanvas-backdrop {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+body.light-mode .offcanvas-backdrop {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.offcanvas.glass-panel {
+    background: rgba(10, 10, 22, 0.6) !important;
+}
+
+body.light-mode .offcanvas.glass-panel {
+    background: rgba(255, 255, 255, 0.6) !important;
+}
+
+.mobile-nav-item {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.offcanvas.show .mobile-nav-item {
+    animation: slideInFade 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slideInFade {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.offcanvas.show .mobile-nav-item:nth-child(1) { animation-delay: 0.1s; }
+.offcanvas.show .mobile-nav-item:nth-child(2) { animation-delay: 0.15s; }
+.offcanvas.show .mobile-nav-item:nth-child(3) { animation-delay: 0.2s; }
+.offcanvas.show .mobile-nav-item:nth-child(4) { animation-delay: 0.25s; }
+.offcanvas.show .mobile-nav-item:nth-child(5) { animation-delay: 0.3s; }
+.offcanvas.show .mobile-nav-item:nth-child(6) { animation-delay: 0.35s; }
+.offcanvas.show .mobile-nav-item:nth-child(7) { animation-delay: 0.4s; }
+.offcanvas.show .mobile-nav-item:nth-child(8) { animation-delay: 0.45s; }
