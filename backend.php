@@ -50,24 +50,26 @@ if ($action === 'add') {
     }
 
 } elseif ($action === 'calculate') {
-    $calcPath = __DIR__ . '/calc.exe';
+    $csvFile = __DIR__ . '/data.csv';
+    $total = 0.00;
 
-    if (!file_exists($calcPath)) {
-        $response['message'] = 'calc.exe not found';
-        echo json_encode($response);
-        exit;
+    if (file_exists($csvFile)) {
+        $handle = fopen($csvFile, 'r');
+        if ($handle !== false) {
+            // Skip header row if it exists
+            $firstLine = fgets($handle);
+            
+            while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+                // The amount is the second column (index 1)
+                if (isset($data[1]) && is_numeric($data[1])) {
+                    $total += (float)$data[1];
+                }
+            }
+            fclose($handle);
+        }
     }
 
-    // Use absolute path and escape for security
-    $command = escapeshellarg($calcPath);
-    $output = shell_exec($command);
-
-    if ($output === null) {
-        $response['message'] = 'Failed to execute calc.exe';
-    } else {
-        $output = trim($output);
-        $response = ['status' => 'success', 'total' => $output];
-    }
+    $response = ['status' => 'success', 'total' => number_format($total, 2, '.', '')];
 } else {
     $response['message'] = 'Invalid action';
 }
