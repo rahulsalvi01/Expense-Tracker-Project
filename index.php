@@ -6,6 +6,106 @@ require_once 'config/db.php';
 $userId = $_SESSION['user_id'];
 $userName = $_SESSION['user_name'] ?? 'User';
 
+// Auto-seed Demo Account data if the demo user has no transactions yet
+$userEmail = $_SESSION['user_email'] ?? '';
+$isDemo = (stripos($userEmail, 'demo') !== false || stripos($userName, 'demo') !== false);
+
+if ($isDemo) {
+    try {
+        $checkTx = $pdo->prepare("SELECT COUNT(*) FROM transactions WHERE user_id = ?");
+        $checkTx->execute([$userId]);
+        if ((int)$checkTx->fetchColumn() === 0) {
+            // Fetch categories dynamically
+            $catMap = [];
+            $incomeCatDefault = null;
+            $expenseCatDefault = null;
+            $cStmt = $pdo->query("SELECT id, name, type FROM categories");
+            while ($r = $cStmt->fetch()) {
+                $catMap[strtolower(trim($r['name']))] = $r['id'];
+                if ($r['type'] === 'income' && !$incomeCatDefault) $incomeCatDefault = $r['id'];
+                if ($r['type'] === 'expense' && !$expenseCatDefault) $expenseCatDefault = $r['id'];
+            }
+
+            // Fetch payment methods dynamically
+            $pmMap = [];
+            $pmDefault = null;
+            $pStmt = $pdo->query("SELECT id, name FROM payment_methods");
+            while ($r = $pStmt->fetch()) {
+                $pmMap[strtolower(trim($r['name']))] = $r['id'];
+                if (!$pmDefault) $pmDefault = $r['id'];
+            }
+
+            $getCat = function($n, $type) use ($catMap, $incomeCatDefault, $expenseCatDefault) {
+                $k = strtolower(trim($n));
+                if (isset($catMap[$k])) return $catMap[$k];
+                return ($type === 'income') ? $incomeCatDefault : $expenseCatDefault;
+            };
+
+            $getPm = function($n) use ($pmMap, $pmDefault) {
+                $k = strtolower(trim($n));
+                return $pmMap[$k] ?? $pmDefault;
+            };
+
+            $currentDay = (int)date('d');
+            $seedData = [
+                ['income', 'Monthly Salary', 75000.00, 'Salary', 'Bank Transfer', 0, 1],
+                ['income', 'Freelance Web Design', 18500.00, 'Freelance', 'UPI', 0, min($currentDay, 12)],
+                ['income', 'Stock Dividend Payout', 4200.00, 'Investments', 'Bank Transfer', 0, min($currentDay, 15)],
+                ['expense', 'Apartment Rent', 22000.00, 'Rent & Mortgage', 'Bank Transfer', 0, 2],
+                ['expense', 'High-Speed Broadband & Electric', 3450.00, 'Utilities', 'UPI', 0, min($currentDay, 5)],
+                ['expense', 'Supermarket Grocery Run', 4850.00, 'Food & Dining', 'Credit Card', 0, min($currentDay, 6)],
+                ['expense', 'Dinner with Friends', 2150.00, 'Food & Dining', 'UPI', 0, min($currentDay, 9)],
+                ['expense', 'Uber & Metro Commute', 1650.00, 'Transportation', 'UPI', 0, min($currentDay, 11)],
+                ['expense', 'Weekly Groceries & Fresh Produce', 3120.00, 'Food & Dining', 'Debit Card', 0, min($currentDay, 14)],
+                ['expense', 'Amazon Shopping - Home Essentials', 4500.00, 'Shopping', 'Credit Card', 0, min($currentDay, 16)],
+                ['expense', 'Netflix & Spotify Premium', 999.00, 'Entertainment', 'Credit Card', 0, min($currentDay, 17)],
+                ['expense', 'Pharmacy & Health Checkup', 1250.00, 'Healthcare', 'UPI', 0, min($currentDay, 18)],
+                ['income', 'Monthly Salary', 75000.00, 'Salary', 'Bank Transfer', 1, 1],
+                ['income', 'Freelance Consultation', 15000.00, 'Freelance', 'UPI', 1, 14],
+                ['expense', 'Apartment Rent', 22000.00, 'Rent & Mortgage', 'Bank Transfer', 1, 2],
+                ['expense', 'Electricity & Water Bill', 3100.00, 'Utilities', 'UPI', 1, 5],
+                ['expense', 'Groceries & Dining', 11200.00, 'Food & Dining', 'Credit Card', 1, 12],
+                ['expense', 'Fuel & Car Maintenance', 4200.00, 'Transportation', 'Debit Card', 1, 18],
+                ['expense', 'Weekend Getaway', 6800.00, 'Entertainment', 'Credit Card', 1, 22],
+                ['expense', 'Apparel & Tech Gadget', 5900.00, 'Shopping', 'Credit Card', 1, 25],
+                ['income', 'Monthly Salary', 75000.00, 'Salary', 'Bank Transfer', 2, 1],
+                ['expense', 'Apartment Rent', 22000.00, 'Rent & Mortgage', 'Bank Transfer', 2, 2],
+                ['expense', 'Food & Supplies', 9800.00, 'Food & Dining', 'Credit Card', 2, 10],
+                ['expense', 'Utilities Bill', 2950.00, 'Utilities', 'UPI', 2, 6],
+                ['expense', 'Movie & Dining', 3400.00, 'Entertainment', 'Debit Card', 2, 20]
+            ];
+
+            $insTx = $pdo->prepare("INSERT INTO transactions (user_id, category_id, payment_method_id, type, title, amount, transaction_date) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            foreach ($seedData as $item) {
+                $cId = $getCat($item[3], $item[0]);
+                $pId = $getPm($item[4]);
+                $date = date('Y-m-d', strtotime("-{$item[5]} month", strtotime(date('Y-m-') . sprintf('%02d', $item[6]))));
+                $insTx->execute([$userId, $cId, $pId, $item[0], $item[1], $item[2], $date]);
+            }
+
+            // Seed Budgets
+            $budgets = [
+                ['Food & Dining', 16000.00],
+                ['Shopping', 8000.00],
+                ['Transportation', 5000.00],
+                ['Entertainment', 4000.00],
+                ['Utilities', 5000.00]
+            ];
+            $insB = $pdo->prepare("INSERT INTO budgets (user_id, category_id, month, year, amount) VALUES (?, ?, ?, ?, ?)");
+            $curM = (int)date('m');
+            $curY = (int)date('Y');
+            foreach ($budgets as $b) {
+                $cId = $getCat($b[0], 'expense');
+                if ($cId) {
+                    $insB->execute([$userId, $cId, $curM, $curY, $b[1]]);
+                }
+            }
+        }
+    } catch (Exception $e) {
+        // Silently continue if seeding fails
+    }
+}
+
 // 1. Calculate Total Income & Expenses
 $totalsStmt = $pdo->prepare("SELECT type, SUM(amount) as total FROM transactions WHERE user_id = ? GROUP BY type");
 $totalsStmt->execute([$userId]);
